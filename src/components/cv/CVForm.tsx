@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Plus, Trash2, User, Briefcase, GraduationCap, Award, FolderOpen } from 'lucide-react';
+import { AITextarea } from './AITextarea';
 
 interface CVFormProps {
   data: CVData;
@@ -67,11 +68,12 @@ export const CVForm = ({ data, onChange }: CVFormProps) => {
       {/* Summary */}
       <section>
         <SectionHeader icon={User} title="Professional Summary" delay={80} />
-        <Textarea
-          placeholder="Write a brief professional summary..."
+        <AITextarea
           value={data.summary}
-          onChange={e => update('summary', e.target.value)}
-          className="bg-card min-h-[100px] resize-none"
+          onChange={(value) => update('summary', value)}
+          placeholder="Write a brief professional summary..."
+          context="Professional summary for a CV/resume"
+          rows={4}
         />
       </section>
 
@@ -102,7 +104,13 @@ export const CVForm = ({ data, onChange }: CVFormProps) => {
                 <Input placeholder="Company" value={exp.company} onChange={e => updateExperience(exp.id, 'company', e.target.value)} className="bg-card" />
                 <Input placeholder="Duration (e.g. 2020–2023)" value={exp.duration} onChange={e => updateExperience(exp.id, 'duration', e.target.value)} className="bg-card md:col-span-2" />
               </div>
-              <Textarea placeholder="Describe your responsibilities and achievements..." value={exp.description} onChange={e => updateExperience(exp.id, 'description', e.target.value)} className="bg-card min-h-[80px] resize-none" />
+              <AITextarea
+                value={exp.description}
+                onChange={(value) => updateExperience(exp.id, 'description', value)}
+                placeholder="Describe your responsibilities and achievements..."
+                context={`Job description for ${exp.jobTitle || 'this position'} at ${exp.company || 'the company'}`}
+                rows={3}
+              />
             </div>
           ))}
           <Button variant="outline" size="sm" onClick={addExperience} className="gap-1.5">

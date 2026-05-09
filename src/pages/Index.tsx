@@ -15,16 +15,23 @@ const Index = () => {
   const [activeTab, setActiveTab] = useState<'edit' | 'preview'>('edit');
   const [downloading, setDownloading] = useState(false);
   const previewRef = useRef<HTMLDivElement>(null);
+  const pdfPreviewRef = useRef<HTMLDivElement>(null);
 
   const handleDownloadPDF = useCallback(async () => {
-    if (!previewRef.current) return;
+    if (!pdfPreviewRef.current) return;
     setDownloading(true);
+    
     try {
-      const canvas = await html2canvas(previewRef.current, {
+      const canvas = await html2canvas(pdfPreviewRef.current, {
         scale: 2,
         useCORS: true,
         backgroundColor: '#ffffff',
+        logging: false,
+        allowTaint: true,
+        letterRendering: true,
       });
+
+
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF('p', 'mm', 'a4');
       const pdfWidth = pdf.internal.pageSize.getWidth();
@@ -32,8 +39,9 @@ const Index = () => {
       pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
       pdf.save(`${cvData.fullName || 'cv'}.pdf`);
       toast.success('PDF downloaded successfully!');
-    } catch {
-      toast.error('Failed to generate PDF');
+    } catch (error) {
+      console.error('PDF generation error:', error);
+      toast.error('Failed to generate PDF. Please try again.');
     } finally {
       setDownloading(false);
     }
@@ -95,7 +103,7 @@ const Index = () => {
           <div className={`${activeTab === 'edit' ? 'hidden lg:block' : ''}`}>
             <div className="sticky top-20">
               <div className="bg-card rounded-xl shadow-card overflow-hidden">
-                <div className="overflow-auto max-h-[80vh]" style={{ transform: 'scale(0.65)', transformOrigin: 'top left', width: '153.8%' }}>
+                <div className="overflow-auto max-h-[80vh]" style={{ transform: 'scale(0.65)', transformOrigin: 'top left', width: '153.8%' }} data-preview-container>
                   <CVPreview ref={previewRef} data={cvData} template={template} />
                 </div>
               </div>
@@ -103,6 +111,12 @@ const Index = () => {
           </div>
         </div>
       </main>
+
+      {/* Hidden full-scale preview for PDF generation */}
+    <div style={{ position: 'absolute', left: 0, top: 0, width: '210mm', minHeight: '297mm', overflow: 'hidden', background: '#fff' }} aria-hidden="true">
+        <CVPreview ref={pdfPreviewRef} data={cvData} template={template} />
+      </div>
+
     </div>
   );
 };
