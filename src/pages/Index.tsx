@@ -113,7 +113,21 @@ const Index = () => {
       </main>
 
       {/* Hidden full-scale preview for PDF generation */}
-    <div style={{ position: 'absolute', left: 0, top: 0, width: '210mm', minHeight: '297mm', overflow: 'hidden', background: '#fff' }} aria-hidden="true">
+    <div
+      style={{
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        width: '210mm',
+        minHeight: '297mm',
+        overflow: 'hidden',
+        background: '#fff',
+        // Prevent this visual-only container from covering/stealing interaction from the edit form.
+        pointerEvents: 'none',
+        zIndex: -1,
+      }}
+      aria-hidden="true"
+    >
         <CVPreview ref={pdfPreviewRef} data={cvData} template={template} />
       </div>
 
