@@ -5,6 +5,7 @@ import { CVPreview } from '@/components/cv/CVPreview';
 import { TemplateSelector } from '@/components/cv/TemplateSelector';
 import { Button } from '@/components/ui/button';
 import { Download, FileText, Eye, PenLine } from 'lucide-react';
+import { ThemeToggle } from "@/components/ThemeToggle";
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { toast } from 'sonner';
@@ -54,14 +55,17 @@ const Index = () => {
             <FileText className="w-5 h-5 text-primary" />
             <span className="font-display text-lg font-semibold text-foreground">Sumo AI</span>
           </div>
-          <Button
-            onClick={handleDownloadPDF}
-            disabled={downloading}
-            className="gap-2 bg-primary text-primary-foreground hover:bg-primary/90 active:scale-[0.97] transition-all"
-          >
-            <Download className="w-4 h-4" />
-            {downloading ? 'Generating...' : 'Download PDF'}
-          </Button>
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <Button
+              onClick={handleDownloadPDF}
+              disabled={downloading}
+              className="gap-2 bg-primary text-primary-foreground hover:bg-primary/90 active:scale-[0.97] transition-all"
+            >
+              <Download className="w-4 h-4" />
+              {downloading ? 'Generating...' : 'Download PDF'}
+            </Button>
+          </div>
         </div>
       </header>
 
