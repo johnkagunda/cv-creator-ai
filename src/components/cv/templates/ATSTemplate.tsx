@@ -1,4 +1,7 @@
 import { CVData } from '@/types/cv';
+import { formatDateRange } from '@/lib/dateRange';
+
+
 
 const lines = (s: string) => s.split('\n').map(l => l.trim()).filter(Boolean);
 
@@ -35,7 +38,9 @@ export const ATSTemplate = ({ data }: { data: CVData }) => (
         {data.experience.filter(e => e.jobTitle).map(exp => (
           <div key={exp.id} style={{ marginBottom: '12px', display: 'block' }}>
             <strong style={{ display: 'inline' }}>{exp.jobTitle}</strong> — {exp.company}
-            <div style={{ fontSize: '10px', color: '#777', marginBottom: '2px', lineHeight: '1.5', display: 'block' }}>{exp.duration}</div>
+            <div style={{ fontSize: '10px', color: '#777', marginBottom: '2px', lineHeight: '1.5', display: 'block' }}>
+              {formatDateRange(exp.start, exp.end)}
+            </div>
             {exp.description && <p style={{ margin: '2px 0 0', lineHeight: '1.7', display: 'block' }}>{exp.description}</p>}
           </div>
         ))}
@@ -47,7 +52,7 @@ export const ATSTemplate = ({ data }: { data: CVData }) => (
         <h2 style={{ fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '6px', marginTop: 0, lineHeight: '1.4', display: 'block' }}>Education</h2>
         {data.education.filter(e => e.school).map(edu => (
           <div key={edu.id} style={{ marginBottom: '6px', lineHeight: '1.7', display: 'block' }}>
-            <strong style={{ display: 'inline' }}>{edu.course}</strong> — {edu.school}, {edu.year}
+            {formatDateRange(edu.start, edu.end)}
           </div>
         ))}
       </section>

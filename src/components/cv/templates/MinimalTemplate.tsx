@@ -1,4 +1,7 @@
 import { CVData } from '@/types/cv';
+import { formatDateRange } from '@/lib/dateRange';
+
+
 
 const skills = (s: string) => s.split(',').map(sk => sk.trim()).filter(Boolean);
 const lines = (s: string) => s.split('\n').map(l => l.trim()).filter(Boolean);
@@ -36,7 +39,9 @@ export const MinimalTemplate = ({ data }: { data: CVData }) => (
           <div key={exp.id} style={{ marginBottom: '14px', display: 'block' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', lineHeight: '1.5', marginBottom: '2px' }}>
               <strong style={{ display: 'inline-block' }}>{exp.jobTitle}</strong>
-              <span style={{ fontSize: '10px', color: '#777', display: 'inline-block', whiteSpace: 'nowrap' }}>{exp.duration}</span>
+              <span style={{ fontSize: '10px', color: '#777', display: 'inline-block', whiteSpace: 'nowrap' }}>
+                {formatDateRange(exp.start, exp.end)}
+              </span>
             </div>
             <div style={{ color: '#555', fontSize: '10px', lineHeight: '1.5', marginBottom: '4px', display: 'block' }}>{exp.company}</div>
             {exp.description && <p style={{ margin: '4px 0 0', fontSize: '10.5px', lineHeight: '1.6', display: 'block' }}>{exp.description}</p>}
@@ -52,7 +57,9 @@ export const MinimalTemplate = ({ data }: { data: CVData }) => (
           <div key={edu.id} style={{ marginBottom: '8px', display: 'block' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', lineHeight: '1.5', marginBottom: '2px' }}>
               <strong style={{ display: 'inline-block' }}>{edu.course}</strong>
-              <span style={{ fontSize: '10px', color: '#777', display: 'inline-block', whiteSpace: 'nowrap' }}>{edu.year}</span>
+              <span style={{ fontSize: '10px', color: '#777', display: 'inline-block', whiteSpace: 'nowrap' }}>
+                {formatDateRange(edu.start, edu.end)}
+              </span>
             </div>
             <div style={{ color: '#555', fontSize: '10px', lineHeight: '1.5', display: 'block' }}>{edu.school}</div>
           </div>

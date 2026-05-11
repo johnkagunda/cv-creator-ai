@@ -20,7 +20,7 @@ const Index = () => {
   const handleDownloadPDF = useCallback(async () => {
     if (!pdfPreviewRef.current) return;
     setDownloading(true);
-    
+
     try {
       const canvas = await html2canvas(pdfPreviewRef.current, {
         scale: 2,
@@ -28,9 +28,7 @@ const Index = () => {
         backgroundColor: '#ffffff',
         logging: false,
         allowTaint: true,
-        letterRendering: true,
       });
-
 
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF('p', 'mm', 'a4');
@@ -54,7 +52,7 @@ const Index = () => {
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <FileText className="w-5 h-5 text-primary" />
-            <span className="font-display text-lg font-semibold text-foreground">ResumeForge</span>
+            <span className="font-display text-lg font-semibold text-foreground">Sumo AI</span>
           </div>
           <Button
             onClick={handleDownloadPDF}
@@ -70,7 +68,9 @@ const Index = () => {
       <main className="max-w-[1600px] mx-auto px-4 sm:px-6 py-6">
         {/* Template Selector */}
         <section className="mb-6 no-print cv-section-enter">
-          <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">Choose Template</h2>
+          <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">
+            Choose Template
+          </h2>
           <TemplateSelector selected={template} onSelect={setTemplate} />
         </section>
 
@@ -78,13 +78,21 @@ const Index = () => {
         <div className="flex lg:hidden mb-4 bg-muted rounded-lg p-1 no-print">
           <button
             onClick={() => setActiveTab('edit')}
-            className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-md text-sm font-medium transition-all ${activeTab === 'edit' ? 'bg-card shadow-card text-foreground' : 'text-muted-foreground'}`}
+            className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-md text-sm font-medium transition-all ${
+              activeTab === 'edit'
+                ? 'bg-card shadow-card text-foreground'
+                : 'text-muted-foreground'
+            }`}
           >
             <PenLine className="w-4 h-4" /> Edit
           </button>
           <button
             onClick={() => setActiveTab('preview')}
-            className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-md text-sm font-medium transition-all ${activeTab === 'preview' ? 'bg-card shadow-card text-foreground' : 'text-muted-foreground'}`}
+            className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-md text-sm font-medium transition-all ${
+              activeTab === 'preview'
+                ? 'bg-card shadow-card text-foreground'
+                : 'text-muted-foreground'
+            }`}
           >
             <Eye className="w-4 h-4" /> Preview
           </button>
@@ -103,7 +111,15 @@ const Index = () => {
           <div className={`${activeTab === 'edit' ? 'hidden lg:block' : ''}`}>
             <div className="sticky top-20">
               <div className="bg-card rounded-xl shadow-card overflow-hidden">
-                <div className="overflow-auto max-h-[80vh]" style={{ transform: 'scale(0.65)', transformOrigin: 'top left', width: '153.8%' }} data-preview-container>
+                <div
+                  className="overflow-auto max-h-[80vh]"
+                  style={{
+                    transform: 'scale(0.65)',
+                    transformOrigin: 'top left',
+                    width: '153.8%',
+                  }}
+                  data-preview-container
+                >
                   <CVPreview ref={previewRef} data={cvData} template={template} />
                 </div>
               </div>
@@ -113,26 +129,26 @@ const Index = () => {
       </main>
 
       {/* Hidden full-scale preview for PDF generation */}
-    <div
-      style={{
-        position: 'absolute',
-        left: 0,
-        top: 0,
-        width: '210mm',
-        minHeight: '297mm',
-        overflow: 'hidden',
-        background: '#fff',
-        // Prevent this visual-only container from covering/stealing interaction from the edit form.
-        pointerEvents: 'none',
-        zIndex: -1,
-      }}
-      aria-hidden="true"
-    >
+      <div
+        style={{
+          position: 'absolute',
+          left: 0,
+          top: 0,
+          width: '210mm',
+          minHeight: '297mm',
+          overflow: 'hidden',
+          background: '#fff',
+          // Prevent this visual-only container from covering/stealing interaction from the edit form.
+          pointerEvents: 'none',
+          zIndex: -1,
+        }}
+        aria-hidden="true"
+      >
         <CVPreview ref={pdfPreviewRef} data={cvData} template={template} />
       </div>
-
     </div>
   );
 };
 
 export default Index;
+

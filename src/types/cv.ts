@@ -2,7 +2,8 @@ export interface WorkExperience {
   id: string;
   jobTitle: string;
   company: string;
-  duration: string;
+  start: string; // YYYY-MM-DD
+  end: string; // YYYY-MM-DD, or '' for Present
   description: string;
 }
 
@@ -10,11 +11,14 @@ export interface Education {
   id: string;
   school: string;
   course: string;
-  year: string;
+  start: string; // YYYY-MM-DD
+  end: string; // YYYY-MM-DD, or '' for Present
 }
+
 
 export interface CVData {
   fullName: string;
+
   email: string;
   phone: string;
   summary: string;
@@ -48,8 +52,9 @@ export const emptyCVData: CVData = {
   phone: '',
   summary: '',
   skills: '',
-  experience: [{ id: '1', jobTitle: '', company: '', duration: '', description: '' }],
-  education: [{ id: '1', school: '', course: '', year: '' }],
+  experience: [{ id: '1', jobTitle: '', company: '', start: '', end: '', description: '' }],
+  education: [{ id: '1', school: '', course: '', start: '', end: '' }],
+
   certifications: '',
   projects: '',
 };

@@ -1,4 +1,4 @@
-# ResumeForge (CV Creator AI)
+# Sumo AI (CV Creator AI)
 
 A web app that lets you fill in your resume data, choose a template, preview it, and download a PDF.
 

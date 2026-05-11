@@ -5,6 +5,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Plus, Trash2, User, Briefcase, GraduationCap, Award, FolderOpen } from 'lucide-react';
 import { AITextarea } from './AITextarea';
+import { MonthYearPicker } from '@/components/ui/month-year-picker';
+
 
 interface CVFormProps {
   data: CVData;
@@ -26,7 +28,7 @@ export const CVForm = ({ data, onChange }: CVFormProps) => {
   };
 
   const addExperience = () => {
-    update('experience', [...data.experience, { id: crypto.randomUUID(), jobTitle: '', company: '', duration: '', description: '' }]);
+    update('experience', [...data.experience, { id: crypto.randomUUID(), jobTitle: '', company: '', start: '', end: '', description: '' }]);
   };
 
   const removeExperience = (id: string) => {
@@ -40,7 +42,7 @@ export const CVForm = ({ data, onChange }: CVFormProps) => {
   };
 
   const addEducation = () => {
-    update('education', [...data.education, { id: crypto.randomUUID(), school: '', course: '', year: '' }]);
+    update('education', [...data.education, { id: crypto.randomUUID(), school: '', course: '', start: '', end: '' }]);
   };
 
   const removeEducation = (id: string) => {
@@ -102,7 +104,28 @@ export const CVForm = ({ data, onChange }: CVFormProps) => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pr-8">
                 <Input placeholder="Job Title" value={exp.jobTitle} onChange={e => updateExperience(exp.id, 'jobTitle', e.target.value)} className="bg-card" />
                 <Input placeholder="Company" value={exp.company} onChange={e => updateExperience(exp.id, 'company', e.target.value)} className="bg-card" />
-                <Input placeholder="Duration (e.g. 2020–2023)" value={exp.duration} onChange={e => updateExperience(exp.id, 'duration', e.target.value)} className="bg-card md:col-span-2" />
+                <MonthYearPicker
+                  value={exp.start}
+                  onChange={(v) => updateExperience(exp.id, 'start', v)}
+                  placeholder="Start"
+                />
+                <div className="grid grid-cols-1 md:col-span-1 gap-3">
+                  <MonthYearPicker
+                    value={exp.end}
+                    onChange={(v) => updateExperience(exp.id, 'end', v)}
+                    placeholder="End"
+                  />
+                  <label className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <input
+                      type="checkbox"
+                      checked={exp.end === ''}
+                      onChange={(e) =>
+                        updateExperience(exp.id, 'end', e.target.checked ? '' : exp.end)
+                      }
+                    />
+                    Present
+                  </label>
+                </div>
               </div>
               <AITextarea
                 value={exp.description}
@@ -133,7 +156,26 @@ export const CVForm = ({ data, onChange }: CVFormProps) => {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pr-8">
                 <Input placeholder="School/University" value={edu.school} onChange={e => updateEducation(edu.id, 'school', e.target.value)} className="bg-card" />
                 <Input placeholder="Course/Degree" value={edu.course} onChange={e => updateEducation(edu.id, 'course', e.target.value)} className="bg-card" />
-                <Input placeholder="Year" value={edu.year} onChange={e => updateEducation(edu.id, 'year', e.target.value)} className="bg-card" />
+                <MonthYearPicker
+                  value={edu.start}
+                  onChange={(v) => updateEducation(edu.id, 'start', v)}
+                  placeholder="Start"
+                />
+                <MonthYearPicker
+                  value={edu.end}
+                  onChange={(v) => updateEducation(edu.id, 'end', v)}
+                  placeholder="End"
+                />
+                <label className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <input
+                    type="checkbox"
+                    checked={edu.end === ''}
+                    onChange={(e) =>
+                      updateEducation(edu.id, 'end', e.target.checked ? '' : edu.end)
+                    }
+                  />
+                  Present
+                </label>
               </div>
             </div>
           ))}

@@ -1,4 +1,7 @@
 import { CVData } from '@/types/cv';
+import { formatDateRange } from '@/lib/dateRange';
+
+
 
 const lines = (s: string) => s.split('\n').map(l => l.trim()).filter(Boolean);
 
@@ -35,7 +38,7 @@ export const CreativeTemplate = ({ data }: { data: CVData }) => (
             <div key={edu.id} style={{ marginBottom: '10px' }}>
               <strong style={{ fontSize: '10.5px' }}>{edu.course}</strong>
               <div style={{ fontSize: '9.5px', opacity: 0.75 }}>{edu.school}</div>
-              <div style={{ fontSize: '9px', opacity: 0.6 }}>{edu.year}</div>
+              {formatDateRange(edu.start, edu.end)}
             </div>
           ))}
         </div>
@@ -64,7 +67,9 @@ export const CreativeTemplate = ({ data }: { data: CVData }) => (
           {data.experience.filter(e => e.jobTitle).map(exp => (
             <div key={exp.id} style={{ marginBottom: '16px', paddingLeft: '14px', borderLeft: '3px solid #2d6a5a' }}>
               <strong style={{ fontSize: '12px' }}>{exp.jobTitle}</strong>
-              <div style={{ fontSize: '10.5px', color: '#2d6a5a', fontWeight: 500 }}>{exp.company} · {exp.duration}</div>
+              <div style={{ fontSize: '10.5px', color: '#2d6a5a', fontWeight: 500 }}>
+                {formatDateRange(exp.start, exp.end)}
+              </div>
               {exp.description && <p style={{ margin: '4px 0 0', color: '#555' }}>{exp.description}</p>}
             </div>
           ))}

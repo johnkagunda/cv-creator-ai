@@ -1,4 +1,7 @@
 import { CVData } from '@/types/cv';
+import { formatDateRange } from '@/lib/dateRange';
+
+
 
 const lines = (s: string) => s.split('\n').map(l => l.trim()).filter(Boolean);
 
@@ -41,7 +44,9 @@ export const CardTemplate = ({ data }: { data: CVData }) => (
           <div key={exp.id} style={{ marginBottom: '12px', paddingBottom: '12px', borderBottom: '1px solid #eee' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <strong>{exp.jobTitle}</strong>
-              <span style={{ fontSize: '10px', color: '#8a5a1e' }}>{exp.duration}</span>
+              <span style={{ fontSize: '10px', color: '#8a5a1e' }}>
+                {formatDateRange(exp.start, exp.end)}
+              </span>
             </div>
             <div style={{ color: '#777', fontSize: '10.5px' }}>{exp.company}</div>
             {exp.description && <p style={{ margin: '4px 0 0', fontSize: '10.5px' }}>{exp.description}</p>}
@@ -55,7 +60,9 @@ export const CardTemplate = ({ data }: { data: CVData }) => (
         {data.education.filter(e => e.school).map(edu => (
           <div key={edu.id} style={{ marginBottom: '6px', display: 'flex', justifyContent: 'space-between' }}>
             <div><strong>{edu.course}</strong> <span style={{ color: '#777' }}>— {edu.school}</span></div>
-            <span style={{ fontSize: '10px', color: '#8a5a1e' }}>{edu.year}</span>
+            <span style={{ fontSize: '10px', color: '#8a5a1e' }}>
+              {formatDateRange(edu.start, edu.end)}
+            </span>
           </div>
         ))}
       </Card>

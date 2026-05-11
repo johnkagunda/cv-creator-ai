@@ -1,4 +1,7 @@
 import { CVData } from '@/types/cv';
+import { formatDateRange } from '@/lib/dateRange';
+
+
 
 const lines = (s: string) => s.split('\n').map(l => l.trim()).filter(Boolean);
 
@@ -130,7 +133,9 @@ export const CorporateTemplate = ({ data }: { data: CVData }) => (
             <div key={exp.id} style={{ marginBottom: '18px', display: 'block', clear: 'both' }}>
               <div style={{ display: 'block', marginBottom: '4px' }}>
                 <strong style={{ fontSize: '12px', display: 'block', lineHeight: '1.5', marginBottom: '2px' }}>{exp.jobTitle}</strong>
-                <div style={{ fontSize: '10px', color: '#1e5f8a', fontWeight: 500, display: 'block', lineHeight: '1.5' }}>{exp.duration}</div>
+                <div style={{ fontSize: '10px', color: '#1e5f8a', fontWeight: 500, display: 'block', lineHeight: '1.5' }}>
+                {formatDateRange(exp.start, exp.end)}
+                </div>
               </div>
               <div style={{ color: '#555', fontStyle: 'italic', fontSize: '10.5px', lineHeight: '1.6', marginBottom: '6px', display: 'block' }}>{exp.company}</div>
               {exp.description && <p style={{ margin: '0', marginTop: '6px', lineHeight: '1.7', display: 'block', fontSize: '11px' }}>{exp.description}</p>}
@@ -159,7 +164,9 @@ export const CorporateTemplate = ({ data }: { data: CVData }) => (
               <div style={{ display: 'block' }}>
                 <strong style={{ display: 'block', marginBottom: '4px', lineHeight: '1.5', fontSize: '11px' }}>{edu.course}</strong>
                 <div style={{ color: '#555', fontSize: '10.5px', lineHeight: '1.6', display: 'block', marginBottom: '2px' }}>{edu.school}</div>
-                <div style={{ fontSize: '10px', color: '#1e5f8a', fontWeight: 500, display: 'block', lineHeight: '1.5' }}>{edu.year}</div>
+                <div style={{ fontSize: '10px', color: '#1e5f8a', fontWeight: 500, display: 'block', lineHeight: '1.5' }}>
+                  {formatDateRange(edu.start, edu.end)}
+                </div>
               </div>
             </div>
           ))}
