@@ -51,5 +51,4 @@ To avoid overlap/offset issues during download, the hidden preview container is 
 
 ## License
 
-MIT
-
+SUMO AI
