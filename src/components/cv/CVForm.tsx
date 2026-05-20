@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Plus, Trash2, User, Briefcase, GraduationCap, Award, FolderOpen } from 'lucide-react';
 import { AITextarea } from './AITextarea';
 import { MonthYearPicker } from '@/components/ui/month-year-picker';
+import { JobDescriptionFiller } from './JobDescriptionFiller';
+
 
 
 interface CVFormProps {
@@ -67,9 +69,15 @@ export const CVForm = ({ data, onChange }: CVFormProps) => {
         </div>
       </section>
 
+      {/* Job Description Autofill */}
+      <section>
+        <JobDescriptionFiller currentCV={data} onFilled={(next) => onChange(next)} />
+      </section>
+
       {/* Summary */}
       <section>
         <SectionHeader icon={User} title="Professional Summary" delay={80} />
+
         <AITextarea
           value={data.summary}
           onChange={(value) => update('summary', value)}
