@@ -42,7 +42,6 @@ npm run preview
 npm run test
 ```
 
-## Notes
 
 ### PDF rendering alignment
 
