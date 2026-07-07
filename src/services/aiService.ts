@@ -1,7 +1,4 @@
-// NOTE: This service is currently called from the browser (client-side).
-// That means any API key here would be exposed to users.
-// Fix properly by moving calls to a server endpoint. For now, we require
-// VITE_OPENROUTER_API_KEY to be set and the key to be valid.
+
 
 import type { CVData, WorkExperience, Education } from '@/types/cv';
 
