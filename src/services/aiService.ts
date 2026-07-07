@@ -214,7 +214,7 @@ function mergeOnlyEmpty(original: CVData, suggested: CVData): CVData {
       };
     });
   }
-
+   
   if (Array.isArray(suggested.education)) {
     result.education = original.education.map((origEdu, i) => {
       const sugEdu: Partial<Education> = suggested.education[i] ?? {};
